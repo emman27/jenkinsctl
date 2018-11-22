@@ -1,2 +1,6 @@
 run:
 	go run cmd/jenkins/jenkins.go
+test:
+	go test -v ./...
+cover:
+	go test -cover -v ./...

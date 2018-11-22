@@ -1,4 +1,4 @@
-// Copyright © 2018 NAME HERE <EMAIL ADDRESS>
+// Copyright © 2018 Emmanuel Goh <emmanuel.goh.7@gmail.com>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,8 +18,12 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/emman27/jenkinsutils/pkg/api"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
+
+var client *api.JenkinsClient
 
 func init() {
 	// Here you will define your flags and configuration settings.
@@ -29,6 +33,13 @@ func init() {
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
+	viper.SetEnvPrefix("jenkins")
+	viper.BindEnv("user")
+	viper.BindEnv("apikey")
+	viper.BindEnv("host")
+
+	client = api.NewJenkinsClient(viper.GetString("host"), viper.GetString("user"), viper.GetString("apikey"))
 }
 
 // rootCmd represents the base command when called without any subcommands

@@ -17,9 +17,15 @@ jobs:
     #### expecting it in the form of
     ####   /go/src/github.com/circleci/go-tool
     ####   /go/src/bitbucket.org/circleci/go-tool
+    environment:
+      CC_TEST_REPORTER_ID: 1d1a2c1a218ebb477ae29b87b6b9c385107772ce6713b63ce24171b55bd56db3
     working_directory: /go/src/github.com/emman27/jenkinsutils
     steps:
       - checkout
       # specify any bash command here prefixed with `run: `
+      - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+      - run: chmod +x ./cc-test-reporter
+      - run: ./cc-test-reporter before-build
       - run: go get -v -t -d ./...
-      - run: go test -v ./...
+      - run: go test -v -coverprofile=c.out ./...
+      - run: ./cc-test-reporter after-build --exit-code $?

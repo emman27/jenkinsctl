@@ -15,11 +15,11 @@
 package cmd
 
 import (
-	"fmt"
-	"os"
+	"flag"
 
 	"github.com/emman27/jenkinsctl/pkg/api"
 	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 )
 
@@ -34,11 +34,12 @@ func init() {
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
-	viper.SetEnvPrefix("jenkinsctl")
+	viper.SetEnvPrefix("jenkins")
 	viper.BindEnv("user")
 	viper.BindEnv("apikey")
 	viper.BindEnv("host")
-
+	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
+	pflag.Parse()
 	client = api.NewJenkinsClient(viper.GetString("host"), viper.GetString("user"), viper.GetString("apikey"))
 }
 
@@ -54,11 +55,8 @@ var rootCmd = &cobra.Command{
 
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
-func Execute() {
+func Execute() error {
 	rootCmd.AddCommand(versionCmd)
 	rootCmd.AddCommand(getCmd)
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+	return rootCmd.Execute()
 }

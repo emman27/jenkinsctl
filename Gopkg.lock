@@ -10,18 +10,6 @@
   version = "v1.1.1"
 
 [[projects]]
-  branch = "master"
-  digest = "1:170b57da4166a0eac050518ca63b60bf15718dcc855a78848a4563a600a03eec"
-  name = "github.com/emman27/jenkinsutils"
-  packages = [
-    "builds",
-    "cmd",
-    "output",
-  ]
-  pruneopts = "UT"
-  revision = "c55f7b7cc1098998d75c36e79d82f3cc9839852e"
-
-[[projects]]
   digest = "1:abeb38ade3f32a92943e5be54f55ed6d6e3b6602761d74b4aab4c9dd45c18abd"
   name = "github.com/fsnotify/fsnotify"
   packages = ["."]
@@ -198,10 +186,10 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
-    "github.com/emman27/jenkinsutils/cmd",
     "github.com/golang/glog",
     "github.com/pkg/errors",
     "github.com/spf13/cobra",
+    "github.com/spf13/pflag",
     "github.com/spf13/viper",
     "github.com/stretchr/testify/assert",
   ]

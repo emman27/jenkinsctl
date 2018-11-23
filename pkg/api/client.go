@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/golang/glog"
 	"github.com/pkg/errors"
 )
 
@@ -20,6 +21,7 @@ type JenkinsClient struct {
 // NewJenkinsClient creates a new Jenkins Client
 // This client implements a 15 second timeout
 func NewJenkinsClient(baseURL, username, password string) *JenkinsClient {
+	glog.Infof("Initializing Jenkins client with user: %s and host: %s", username, baseURL)
 	authorizationHeader := base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%s:%s", username, password)))
 	return &JenkinsClient{
 		Client: http.Client{
@@ -35,6 +37,7 @@ func NewJenkinsClient(baseURL, username, password string) *JenkinsClient {
 // In addition, the client also checks for non-2xx status codes and reports them as errors
 func (c *JenkinsClient) Do(req *http.Request) (*http.Response, error) {
 	req.Header.Set("Authorization", c.authorizationHeader)
+	glog.Infof("Calling %s", req.URL.String())
 	resp, err := c.Client.Do(req)
 	if err != nil {
 		return nil, errors.Wrapf(err, "http request for %s not successful", req.URL.String())
@@ -45,8 +48,9 @@ func (c *JenkinsClient) Do(req *http.Request) (*http.Response, error) {
 
 // Get is syntactic sugar for a HTTP Do.
 // Needs to be reimplemented to get the benefits of having the headers
+// Also automatically adds the base URL
 func (c *JenkinsClient) Get(url string) (*http.Response, error) {
-	req, err := http.NewRequest("GET", url, nil)
+	req, err := http.NewRequest("GET", c.BaseURL+url, nil)
 	if err != nil {
 		return nil, err
 	}

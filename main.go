@@ -1,4 +1,4 @@
-// Copyright © 2018 NAME HERE <EMAIL ADDRESS>
+// Copyright © 2018 Emmanuel Goh <emmanuel.goh.7@gmail.com>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,8 +14,14 @@
 
 package main
 
-import "github.com/emman27/jenkinsutils/cmd"
+import (
+	"flag"
+
+	"github.com/emman27/jenkinsutils/cmd"
+	"github.com/spf13/pflag"
+)
 
 func main() {
+	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
 	cmd.Execute()
 }

@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/emman27/jenkinsutils/pkg/api"
+	"github.com/emman27/jenkinsctl/pkg/api"
 	"github.com/golang/glog"
 	"github.com/pkg/errors"
 )

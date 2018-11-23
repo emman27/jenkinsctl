@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/emman27/jenkinsutils/output"
-	"github.com/emman27/jenkinsutils/pkg/api/builds"
+	"github.com/emman27/jenkinsctl/output"
+	"github.com/emman27/jenkinsctl/pkg/api/builds"
 	"github.com/spf13/cobra"
 )
 

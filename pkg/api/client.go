@@ -35,6 +35,8 @@ func (c *JenkinsClient) Do(req *http.Request) (*http.Response, error) {
 	return c.Client.Do(req)
 }
 
+// Get is syntactic sugar for a HTTP Do.
+// Needs to be reimplemented to get the benefits of having the headers
 func (c *JenkinsClient) Get(url string) (*http.Response, error) {
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {

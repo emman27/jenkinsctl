@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/emman27/jenkinsutils/pkg/api"
+	"github.com/emman27/jenkinsctl/pkg/api"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

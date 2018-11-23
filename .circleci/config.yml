@@ -18,7 +18,7 @@ jobs:
     ####   /go/src/github.com/circleci/go-tool
     ####   /go/src/bitbucket.org/circleci/go-tool
     environment:
-      CC_TEST_REPORTER_ID: 1d1a2c1a218ebb477ae29b87b6b9c385107772ce6713b63ce24171b55bd56db3
+      CC_TEST_REPORTER_ID: 9dfa8104e110a2fbe5cbce3270613737c64d6686a63730ae52077959df7c4b7f
     working_directory: /go/src/github.com/emman27/jenkinsctl
     steps:
       - checkout

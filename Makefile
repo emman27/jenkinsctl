@@ -1,5 +1,7 @@
+build:
+	go build -o bin/jenkinsctl main.go
 run:
-	go run cmd/jenkins/jenkins.go
+	go run main.go
 test:
 	go test -v ./...
 cover:

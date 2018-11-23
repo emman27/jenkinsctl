@@ -13,3 +13,6 @@
 
 # Dep installs
 vendor
+
+# Binary directory
+bin

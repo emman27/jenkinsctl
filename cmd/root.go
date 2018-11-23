@@ -34,7 +34,7 @@ func init() {
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
-	viper.SetEnvPrefix("jenkins")
+	viper.SetEnvPrefix("jenkinsctl")
 	viper.BindEnv("user")
 	viper.BindEnv("apikey")
 	viper.BindEnv("host")

@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"net/http"
 	"time"
+
+	"github.com/pkg/errors"
 )
 
 // JenkinsClient is a specialized version of the http.Client
@@ -30,9 +32,15 @@ func NewJenkinsClient(baseURL, username, password string) *JenkinsClient {
 
 // Do performs a HTTP request.
 // This also adds the authorization header from values found in the environment variables
+// In addition, the client also checks for non-2xx status codes and reports them as errors
 func (c *JenkinsClient) Do(req *http.Request) (*http.Response, error) {
 	req.Header.Set("Authorization", c.authorizationHeader)
-	return c.Client.Do(req)
+	resp, err := c.Client.Do(req)
+	if err != nil {
+		return nil, errors.Wrapf(err, "http request for %s not successful", req.URL.String())
+	}
+	err = checkStatusCode(resp)
+	return resp, err
 }
 
 // Get is syntactic sugar for a HTTP Do.
@@ -43,4 +51,11 @@ func (c *JenkinsClient) Get(url string) (*http.Response, error) {
 		return nil, err
 	}
 	return c.Do(req)
+}
+
+func checkStatusCode(resp *http.Response) error {
+	if resp.StatusCode >= 400 {
+		return fmt.Errorf("api call failed with status code %d", resp.StatusCode)
+	}
+	return nil
 }

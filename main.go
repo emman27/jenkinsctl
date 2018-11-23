@@ -18,10 +18,13 @@ import (
 	"flag"
 
 	"github.com/emman27/jenkinsutils/cmd"
+	"github.com/golang/glog"
 	"github.com/spf13/pflag"
 )
 
 func main() {
 	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
+	pflag.Parse()
+	glog.Info("Starting jenkinsctl")
 	cmd.Execute()
 }

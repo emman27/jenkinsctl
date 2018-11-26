@@ -3,9 +3,10 @@
 package builds
 
 import (
-	"fmt"
 	"strconv"
 	"time"
+
+	durafmt "github.com/hako/durafmt"
 )
 
 // BuildResult is an enum of possible Jenkins build results
@@ -65,11 +66,15 @@ func (b *Builds) Headers() []string {
 func (b *Builds) Rows() [][]string {
 	rows := [][]string{}
 	for _, build := range *b {
+		formattedTime, err := durafmt.ParseString((time.Duration(build.Duration) * time.Millisecond).String())
+		if err != nil {
+			panic(err) // TODO: Don't panic this
+		}
 		rows = append(rows, []string{
 			strconv.Itoa(build.ID),
 			string(build.Result),
 			time.Unix(build.Timestamp/1000, 0).String(),
-			fmt.Sprintf("%d seconds", build.Duration),
+			formattedTime.String(),
 		})
 	}
 	return rows

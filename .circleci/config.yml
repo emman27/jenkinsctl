@@ -3,7 +3,7 @@
 # Check https://circleci.com/docs/2.0/language-go/ for more details
 version: 2
 jobs:
-  build:
+  test:
     docker:
       # specify the version
       - image: circleci/golang:1.11
@@ -29,3 +29,31 @@ jobs:
       - run: go get -v -t -d ./...
       - run: go test -v -coverprofile=c.out ./...
       - run: ./cc-test-reporter after-build --exit-code $?
+  release:
+    docker:
+    - image: circleci/golang:1.11
+    context: github-tokens
+    working_directory: /go/src/github.com/emman27/jenkinsctl
+    steps:
+    - checkout
+    - run: go get -v -t -d ./...
+    - run: go build -o bin/jenkinsctl main.go
+    - run: go get github.com/tcnksm/ghr
+    - run: go install github.com/tcnksm/ghr
+    - run: ./bin/jenkinsctl version
+    - run:
+        name: "Publish Release on Github"
+        command: |
+          ghr -t ${GITHUB_PERSONAL_ACCESS_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} $(./bin/jenkinsctl version) bin/
+
+workflows:
+  version: 2
+  standard:
+    jobs:
+    - test
+    - release:
+        filters:
+          branches:
+            only: master
+        requires:
+        - test

@@ -36,7 +36,7 @@ jobs:
     steps:
       - checkout
       - run: go get -v -t -d ./...
-      - run: go build -o /go/src/github.com/emman27/jenkinsctl main.go
+      - run: go build -o /go/src/github.com/emman27/jenkinsctl/jenkinsctl main.go
       - persist_to_workspace:
           root: /go/src/github.com/emman27/jenkinsctl
           paths:

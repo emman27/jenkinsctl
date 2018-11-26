@@ -37,6 +37,10 @@ jobs:
       - checkout
       - run: go get -v -t -d ./...
       - run: go build -o jenkinsctl main.go
+      - persist_to_workspace:
+          root: .
+          paths:
+          - jenkinsctl
   release:
     docker:
     - image: cibuilds/github:0.10

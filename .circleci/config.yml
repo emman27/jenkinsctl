@@ -29,3 +29,13 @@ jobs:
       - run: go get -v -t -d ./...
       - run: go test -v -coverprofile=c.out ./...
       - run: ./cc-test-reporter after-build --exit-code $?
+
+workflows:
+  version: 2
+  standard:
+    jobs:
+    - build
+    - release:
+        filters:
+          branches:
+            only: master

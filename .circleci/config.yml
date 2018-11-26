@@ -38,7 +38,7 @@ jobs:
       - run: go get -v -t -d ./...
       - run: go build -o jenkinsctl main.go
       - persist_to_workspace:
-          root: .
+          root: /go/src/github.com/emman27/jenkinsctl
           paths:
           - jenkinsctl
   release:
@@ -51,7 +51,7 @@ jobs:
     - run:
         name: "Publish Release on Github"
         command: |
-          VERSION=$(./artifacts/jenkinsctl version) ghr -t $(GITHUB_PERSONAL_ACCESS_TOKEN) -u $(CIRCLE_PROJECT_USERNAME) -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ./artifacts/jenkinsctl
+          VERSION=$(./artifacts/jenkinsctl version) ghr -t $GITHUB_PERSONAL_ACCESS_TOKEN -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ./artifacts/jenkinsctl
 
 workflows:
   version: 2

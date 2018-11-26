@@ -3,6 +3,7 @@
 package builds
 
 import (
+	"encoding/json"
 	"strconv"
 	"time"
 
@@ -78,4 +79,13 @@ func (b *Builds) Rows() [][]string {
 		})
 	}
 	return rows
+}
+
+// JSON formats a build as JSON
+func (b *Builds) JSON() []byte {
+	res, err := json.Marshal(b)
+	if err != nil {
+		panic(err)
+	}
+	return res
 }

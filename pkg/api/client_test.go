@@ -1,7 +1,9 @@
 package api
 
 import (
+	"encoding/base64"
 	"net/http"
+	"net/http/httptest"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -19,4 +21,18 @@ func Test_checkStatusCode(t *testing.T) {
 	a.NotNil(checkStatusCode(&http.Response{StatusCode: 500}), "HTTP Code 500 should cause errors")
 	a.Nil(checkStatusCode(&http.Response{StatusCode: 200}), "HTTP Code 200 should not cause errors")
 	a.Nil(checkStatusCode(&http.Response{StatusCode: 201}), "HTTP Code 201 should not cause errors")
+}
+
+func Test_DoAddsHeaders(t *testing.T) {
+	handler := http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+		assert.Equal(t, "/", req.URL.EscapedPath())
+		assert.Equal(t, "Basic ", req.Header.Get("Authorization")[:6])
+		bytes, err := base64.StdEncoding.DecodeString(req.Header.Get("Authorization")[6:])
+		assert.Nil(t, err)
+		assert.Equal(t, "user:password", string(bytes))
+	})
+	server := httptest.NewServer(handler)
+	defer server.Close()
+	client := NewJenkinsClient(server.URL, "user", "password")
+	client.Get("/")
 }

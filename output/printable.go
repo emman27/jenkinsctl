@@ -1,6 +1,8 @@
 package output
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"os"
 	"strings"
@@ -13,10 +15,14 @@ type Printable interface {
 	Headers() []string
 	// Row is an array of strings to match to the headers
 	Rows() [][]string
+	JSON() []byte
 }
 
+// Print sends a message to stdout with the format set in the command line
 func Print(p Printable) {
 	switch *outputFormat {
+	case "json":
+		printJSON(p)
 	default:
 		printDefault(p)
 	}
@@ -29,4 +35,10 @@ func printDefault(p Printable) {
 		fmt.Fprintln(w, strings.Join(row, "\t"))
 	}
 	w.Flush()
+}
+
+func printJSON(p Printable) {
+	var out bytes.Buffer
+	json.Indent(&out, p.JSON(), "", "  ")
+	out.WriteTo(os.Stdout)
 }

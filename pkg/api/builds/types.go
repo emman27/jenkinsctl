@@ -3,6 +3,7 @@
 package builds
 
 import (
+	"fmt"
 	"strconv"
 	"time"
 )
@@ -24,6 +25,7 @@ type Build struct {
 	Result      BuildResult   `json:"result"`
 	Description string        `json:"description"`
 	Timestamp   int64         `json:"timestamp"`
+	Duration    int64         `json:"duration"`
 }
 
 // BuildAction is an interface for hudson.model.*Action
@@ -54,6 +56,7 @@ func (b *Builds) Headers() []string {
 		"Build ID",
 		"Result",
 		"Time",
+		"Duration",
 	}
 }
 
@@ -66,6 +69,7 @@ func (b *Builds) Rows() [][]string {
 			strconv.Itoa(build.ID),
 			string(build.Result),
 			time.Unix(build.Timestamp/1000, 0).String(),
+			fmt.Sprintf("%d seconds", build.Duration),
 		})
 	}
 	return rows

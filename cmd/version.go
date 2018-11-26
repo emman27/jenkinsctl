@@ -6,6 +6,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// Version of the jenkinsctl command
+const Version = "1.0.0"
+
 var versionCmd = &cobra.Command{
 	Use:   "version",
 	Short: "Version number for Jenkins CLI",
@@ -15,5 +18,5 @@ var versionCmd = &cobra.Command{
 }
 
 func printVersion() {
-	fmt.Println("1.0.0")
+	fmt.Println(Version)
 }

@@ -16,7 +16,6 @@ func (p *Parameters) Headers() []string {
 }
 
 // Rows for the default view
-// TODO: STUB
 func (p *Parameters) Rows() [][]string {
 	result := [][]string{}
 	for _, param := range *p {

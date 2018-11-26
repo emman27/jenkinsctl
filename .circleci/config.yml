@@ -35,6 +35,7 @@ jobs:
     working_directory: /go/src/github.com/emman27/jenkinsctl
     steps:
       - checkout
+      - run: go get -v -t -d ./...
       - run: go build -o jenkinsctl main.go
   release:
     docker:
@@ -53,7 +54,10 @@ workflows:
   standard:
     jobs:
     - test
-    - build
+    - build:
+        filters:
+          branches:
+            only: master
     - release:
         filters:
           branches:

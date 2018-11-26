@@ -20,6 +20,10 @@ func Get(c *api.JenkinsClient, jobName string, buildID int) (*Parameters, error)
 		return nil, err
 	}
 	glog.Infof("Build Actions found: %v", build.Actions)
+	return getParams(build)
+}
+
+func getParams(build *builds.Build) (*Parameters, error) {
 	for _, action := range build.Actions {
 		if action.Class == parameterActionClass {
 			params := Parameters(*action.Parameters)

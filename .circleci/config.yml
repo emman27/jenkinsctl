@@ -47,7 +47,7 @@ jobs:
     - run:
         name: "Publish Release on Github"
         command: |
-          VERSION=$(jenkinsctl version) ghr -t $(GITHUB_PERSONAL_ACCESS_TOKEN) -u $(CIRCLE_PROJECT_USER_NAME) -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ./artifacts/jenkinsctl
+          VERSION=$(./artifacts/jenkinsctl version) ghr -t $(GITHUB_PERSONAL_ACCESS_TOKEN) -u $(CIRCLE_PROJECT_USER_NAME) -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ./artifacts/jenkinsctl
 
 workflows:
   version: 2

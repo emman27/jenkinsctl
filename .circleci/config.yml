@@ -29,43 +29,31 @@ jobs:
       - run: go get -v -t -d ./...
       - run: go test -v -coverprofile=c.out ./...
       - run: ./cc-test-reporter after-build --exit-code $?
-  build:
-    docker:
-      - image: circleci/golang:1.11
-    working_directory: /go/src/github.com/emman27/jenkinsctl
-    steps:
-      - checkout
-      - run: go get -v -t -d ./...
-      - run: go build -o /go/src/github.com/emman27/jenkinsctl/jenkinsctl main.go
-      - persist_to_workspace:
-          root: /go/src/github.com/emman27/jenkinsctl
-          paths:
-          - jenkinsctl
   release:
     docker:
-    - image: cibuilds/github:0.10
+    - image: circleci/golang:1.11
     context: github-tokens
+    working_directory: /go/src/github.com/emman27/jenkinsctl
     steps:
-    - attach_workspace:
-        at: /tmp/artifacts
+    - checkout
+    - run: go get -v -t -d ./...
+    - run: go build -o bin/jenkinsctl main.go
+    - run: go get github.com/tcnksm/ghr
+    - run: go install github.com/tcnksm/ghr
+    - run: ./bin/jenkinsctl version
     - run:
         name: "Publish Release on Github"
         command: |
-          VERSION=$(/tmp/artifacts/jenkinsctl version) ghr -t $GITHUB_PERSONAL_ACCESS_TOKEN -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} /tmp/artifacts/jenkinsctl
+          ghr -t ${GITHUB_PERSONAL_ACCESS_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} $(./bin/jenkinsctl version) bin/
 
 workflows:
   version: 2
   standard:
     jobs:
     - test
-    - build:
-        filters:
-          branches:
-            only: master
     - release:
         filters:
           branches:
             only: master
         requires:
-        - build
         - test

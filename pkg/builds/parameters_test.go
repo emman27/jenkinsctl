@@ -27,3 +27,14 @@ func Test_ParameterMarshalJSON(t *testing.T) {
 	assert.Nil(t, err, "Cannot marshal BuildParameter to JSON")
 	assert.Equal(t, "{\"name\":\"some Name\",\"type\":\"Boolean\",\"value\":\"Hi\"}", string(json), "JSON result not as expected")
 }
+
+func Test_ParametersMarshalJSON(t *testing.T) {
+	p := BuildParameters{BuildParameter{
+		Class: Boolean,
+		Name:  "some Name",
+		Value: "Hi",
+	}}
+	json := p.JSON()
+	assert.Equal(t, "[{\"name\":\"some Name\",\"type\":\"Boolean\",\"value\":\"Hi\"}]", string(json), "JSON result not as expected")
+
+}

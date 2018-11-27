@@ -1,9 +1,9 @@
-package parameters
+package api
 
 import (
 	"testing"
 
-	"github.com/emman27/jenkinsctl/pkg/api/builds"
+	"github.com/emman27/jenkinsctl/pkg/builds"
 	"github.com/stretchr/testify/assert"
 )
 

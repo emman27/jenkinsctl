@@ -29,7 +29,7 @@ func Print(p Printable) {
 }
 
 func printDefault(p Printable) {
-	w := tabwriter.NewWriter(os.Stdout, 0, 8, 1, '\t', 0)
+	w := tabwriter.NewWriter(os.Stdout, 0, 8, 2, '\t', 0)
 	fmt.Fprintln(w, strings.Join(p.Headers(), "\t"))
 	for _, row := range p.Rows() {
 		fmt.Fprintln(w, strings.Join(row, "\t"))

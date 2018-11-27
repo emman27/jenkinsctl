@@ -31,20 +31,9 @@ type Build struct {
 }
 
 // BuildAction is an interface for hudson.model.*Action
-type BuildAction interface{}
-
-// ParametersAction represents a set of parameters used to call a job.ParametersAction
-// Maps to hudson.model.ParametersAction
-type ParametersAction struct {
-	Class      string           `json:"_class"`
-	Parameters []BuildParameter `json:"parameters"`
-}
-
-// BuildParameter represents a hudson.model.*ParameterValue
-type BuildParameter struct {
-	Class string `json:"_class"`
-	Name  string `json:"name"`
-	Value string `json:"value"`
+type BuildAction struct {
+	Class      string            `json:"_class"`
+	Parameters *[]BuildParameter `json:"parameters"`
 }
 
 // Builds is an alias for a slice of Build

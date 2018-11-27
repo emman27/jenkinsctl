@@ -1,6 +1,6 @@
 package parameters
 
-import "github.com/emman27/jenkinsctl/pkg/api/builds"
+import "github.com/emman27/jenkinsctl/pkg/builds"
 
 // Parameters is the printable array of Parameter
 // Implements output.Printable

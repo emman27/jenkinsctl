@@ -6,8 +6,8 @@ import (
 	"strconv"
 
 	"github.com/emman27/jenkinsctl/output"
-	"github.com/emman27/jenkinsctl/pkg/api/builds"
 	"github.com/emman27/jenkinsctl/pkg/api/parameters"
+	"github.com/emman27/jenkinsctl/pkg/builds"
 	"github.com/spf13/cobra"
 )
 
@@ -34,22 +34,14 @@ func init() {
 }
 
 func buildsCmd(cmd *cobra.Command, args []string) {
-	if len(args) == 1 {
-		jobName := args[0]
-		buildData, err := builds.List(client, jobName)
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
-		output.Print(buildData)
-	} else if len(args) == 2 {
+	if len(args) == 2 {
 		jobName := args[0]
 		buildID, err := strconv.Atoi(args[1])
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
 		}
-		buildData, err := builds.Get(client, jobName, buildID)
+		buildData, err := client.GetBuild(jobName, buildID)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)

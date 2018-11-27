@@ -1,5 +1,7 @@
 package builds
 
+import "encoding/json"
+
 // Possible Parameter Types
 const (
 	Boolean string = "hudson.model.BooleanParameterValue"
@@ -58,5 +60,20 @@ func (p *BuildParameters) Rows() [][]string {
 // JSON formatted parameters
 // TODO: STUB
 func (p *BuildParameters) JSON() []byte {
-	return []byte("")
+	res, err := json.Marshal(p)
+	if err != nil {
+		panic(err)
+	}
+	return res
+}
+
+// MarshalJSON provides a custom JSON output format for a BuildParameter
+// This means you get {"type": "Boolean"} instead of {"type": <some-java-class-name>}
+// Makes things much nicer to work with
+func (p *BuildParameter) MarshalJSON() ([]byte, error) {
+	return json.Marshal(map[string]interface{}{
+		"type":  p.Type(),
+		"name":  p.Name,
+		"value": p.Value,
+	})
 }

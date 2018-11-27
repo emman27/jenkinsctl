@@ -6,7 +6,6 @@ import (
 	"strconv"
 
 	"github.com/emman27/jenkinsctl/output"
-	"github.com/emman27/jenkinsctl/pkg/api/parameters"
 	"github.com/emman27/jenkinsctl/pkg/builds"
 	"github.com/spf13/cobra"
 )
@@ -54,7 +53,7 @@ func parametersCmd(cmd *cobra.Command, args []string) {
 	var (
 		buildID int
 		err     error
-		params  *parameters.Parameters
+		params  *builds.Parameters
 	)
 	if len(args) != 2 {
 		fmt.Println("This command requires 2 parameters. Usage: jenkinsctl get parameters <jobname> <buildID>")
@@ -65,7 +64,7 @@ func parametersCmd(cmd *cobra.Command, args []string) {
 		fmt.Printf("Build ID %v is not an integer]\n", args[1])
 		os.Exit(1)
 	}
-	if params, err = parameters.Get(client, jobName, buildID); err != nil {
+	if params, err = client.GetParameters(jobName, buildID); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}

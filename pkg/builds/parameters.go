@@ -1,10 +1,8 @@
-package parameters
-
-import "github.com/emman27/jenkinsctl/pkg/builds"
+package builds
 
 // Parameters is the printable array of Parameter
 // Implements output.Printable
-type Parameters []builds.BuildParameter
+type Parameters []BuildParameter
 
 // Headers for the default view
 func (p *Parameters) Headers() []string {

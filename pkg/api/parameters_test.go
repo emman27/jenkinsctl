@@ -1,4 +1,4 @@
-package parameters
+package api
 
 import (
 	"testing"

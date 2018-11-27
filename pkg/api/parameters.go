@@ -1,16 +1,15 @@
-package parameters
+package api
 
 import (
 	"errors"
 
-	"github.com/emman27/jenkinsctl/pkg/api"
 	"github.com/emman27/jenkinsctl/pkg/builds"
 )
 
 const parameterActionClass = "hudson.model.ParametersAction"
 
-// Get the parameters for a particular job and build
-func Get(c *api.JenkinsClient, jobName string, buildID int) (*Parameters, error) {
+// GetParameters the parameters for a particular job and build
+func (c *JenkinsClient) GetParameters(jobName string, buildID int) (*builds.Parameters, error) {
 	build, err := c.GetBuild(jobName, buildID)
 	if err != nil {
 		return nil, err
@@ -18,10 +17,10 @@ func Get(c *api.JenkinsClient, jobName string, buildID int) (*Parameters, error)
 	return getParams(build)
 }
 
-func getParams(build *builds.Build) (*Parameters, error) {
+func getParams(build *builds.Build) (*builds.Parameters, error) {
 	for _, action := range build.Actions {
 		if action.Class == parameterActionClass {
-			params := Parameters(*action.Parameters)
+			params := builds.Parameters(*action.Parameters)
 			return &params, nil
 		}
 	}

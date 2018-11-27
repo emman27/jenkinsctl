@@ -29,7 +29,7 @@ type BuildParameter struct {
 	Value string `json:"value"`
 }
 
-// Parameters is the printable array of Parameter
+// BuildParameters is the printable array of Parameter
 // Implements output.Printable
 type BuildParameters []BuildParameter
 

@@ -7,7 +7,7 @@ import (
 )
 
 func TestHeaders_and_Rows_Length_Equal(t *testing.T) {
-	p := Parameters{
+	p := BuildParameters{
 		BuildParameter{
 			Class: Boolean,
 			Name:  "some Name",

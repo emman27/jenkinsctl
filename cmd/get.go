@@ -53,7 +53,7 @@ func parametersCmd(cmd *cobra.Command, args []string) {
 	var (
 		buildID int
 		err     error
-		params  *builds.Parameters
+		params  *builds.BuildParameters
 	)
 	if len(args) != 2 {
 		fmt.Println("This command requires 2 parameters. Usage: jenkinsctl get parameters <jobname> <buildID>")

@@ -9,7 +9,7 @@ import (
 const parameterActionClass = "hudson.model.ParametersAction"
 
 // GetParameters the parameters for a particular job and build
-func (c *JenkinsClient) GetParameters(jobName string, buildID int) (*builds.Parameters, error) {
+func (c *JenkinsClient) GetParameters(jobName string, buildID int) (*builds.BuildParameters, error) {
 	build, err := c.GetBuild(jobName, buildID)
 	if err != nil {
 		return nil, err
@@ -17,10 +17,10 @@ func (c *JenkinsClient) GetParameters(jobName string, buildID int) (*builds.Para
 	return getParams(build)
 }
 
-func getParams(build *builds.Build) (*builds.Parameters, error) {
+func getParams(build *builds.Build) (*builds.BuildParameters, error) {
 	for _, action := range build.Actions {
 		if action.Class == parameterActionClass {
-			params := builds.Parameters(*action.Parameters)
+			params := builds.BuildParameters(*action.Parameters)
 			return &params, nil
 		}
 	}

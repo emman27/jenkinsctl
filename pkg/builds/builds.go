@@ -28,6 +28,7 @@ type Build struct {
 	Description string        `json:"description"`
 	Timestamp   int64         `json:"timestamp"`
 	Duration    int64         `json:"duration"`
+	Artifacts   []Artifact    `json:"artifacts"`
 }
 
 // BuildAction is an interface for hudson.model.*Action

@@ -26,5 +26,5 @@ func TestBuilds_JSON(t *testing.T) {
 			Duration:    int64(30),
 		},
 	}
-	assert.Equal(t, "[{\"_class\":\"Something\",\"actions\":[],\"number\":24,\"result\":\"SUCCESS\",\"description\":\"Just a job\",\"timestamp\":123456789,\"duration\":30}]", string(builds.JSON()))
+	assert.Equal(t, "[{\"_class\":\"Something\",\"actions\":[],\"number\":24,\"result\":\"SUCCESS\",\"description\":\"Just a job\",\"timestamp\":123456789,\"duration\":30,\"artifacts\":null}]", string(builds.JSON()))
 }

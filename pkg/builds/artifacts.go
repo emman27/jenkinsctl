@@ -1,10 +1,14 @@
 package builds
 
+import (
+	"encoding/json"
+)
+
 // Artifact is a build artifact from Jenkins
 type Artifact struct {
-	DisplayPath  string
-	FileName     string
-	RelativePath string
+	DisplayPath  string `json:"display_path"`
+	FileName     string `json:"file_name"`
+	RelativePath string `json:"relative_path"`
 }
 
 // Artifacts is a collection of Artifacts.
@@ -29,7 +33,10 @@ func (a *Artifacts) Rows() [][]string {
 }
 
 // JSON converts to JSON
-// TODO: stub
 func (a *Artifacts) JSON() []byte {
-	return []byte{}
+	res, err := json.Marshal(a)
+	if err != nil {
+		panic(err)
+	}
+	return res
 }

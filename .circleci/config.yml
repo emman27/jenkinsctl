@@ -29,27 +29,8 @@ jobs:
       - run: go get -v -t -d ./...
       - run: go test -v -coverprofile=c.out ./...
       - run: ./cc-test-reporter after-build --exit-code $?
-  release:
-    docker:
-    - image: circleci/golang:1.11
-    context: github-tokens
-    working_directory: /go/src/github.com/emman27/jenkinsctl
-    steps:
-    - checkout
-    - run: go get -v -t -d ./...
-    - run: go build -o bin/jenkinsctl main.go
-    - run: go get -u github.com/tcnksm/ghr
-    - run: go install github.com/tcnksm/ghr
-    - run: git tag $(bin/jenkinsctl version)
-    - run: git push --tags
 workflows:
   version: 2
   standard:
     jobs:
     - test
-    - release:
-        filters:
-          branches:
-            only: feature/fix-release-pipeline
-        requires:
-        - test

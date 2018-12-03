@@ -58,5 +58,6 @@ var rootCmd = &cobra.Command{
 func Execute() error {
 	rootCmd.AddCommand(versionCmd)
 	rootCmd.AddCommand(getCmd)
+	rootCmd.AddCommand(createCmd)
 	return rootCmd.Execute()
 }

@@ -1,6 +1,7 @@
 package api
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -24,4 +25,10 @@ func (c *JenkinsClient) GetBuild(jobName string, buildID int) (*builds.Build, er
 	json.Unmarshal(content, build)
 	glog.Infof("Parsed response %v", build)
 	return build, nil
+}
+
+// CreateBuild starts a build in Jenkins
+func (c *JenkinsClient) CreateBuild(jobName string, params map[string]interface{}) {
+	reader := bytes.NewReader([]byte{})
+	c.Post(fmt.Sprintf("/job/%s/build", jobName), reader)
 }

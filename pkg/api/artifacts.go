@@ -7,6 +7,7 @@ import (
 	"github.com/emman27/jenkinsctl/pkg/builds"
 )
 
+// GetArtifacts returns an array of artifacts for a particular build
 func (c *JenkinsClient) GetArtifacts(jobName string, buildID int) (*builds.Artifacts, error) {
 	build, err := c.GetBuild(jobName, buildID)
 	if err != nil {
@@ -16,6 +17,9 @@ func (c *JenkinsClient) GetArtifacts(jobName string, buildID int) (*builds.Artif
 	return &result, nil
 }
 
+// GetArtifact retrieves an artifact from Jenkins.
+// Returns a byte array containing the contents of the artifact
+// Artifacts are typically files stored by the Jenkins job
 func (c *JenkinsClient) GetArtifact(jobName string, buildID int, artifactFileName string) ([]byte, error) {
 	artifacts, err := c.GetArtifacts(jobName, buildID)
 	if err != nil {

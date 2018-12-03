@@ -7,7 +7,7 @@ import (
 )
 
 // Version of the jenkinsctl command
-const Version = "0.2.0"
+const Version = "0.3.0"
 
 var versionCmd = &cobra.Command{
 	Use:   "version",

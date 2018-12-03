@@ -29,26 +29,8 @@ jobs:
       - run: go get -v -t -d ./...
       - run: go test -v -coverprofile=c.out ./...
       - run: ./cc-test-reporter after-build --exit-code $?
-  release:
-    docker:
-    - image: circleci/golang:1.11
-    context: github-tokens
-    working_directory: /go/src/github.com/emman27/jenkinsctl
-    steps:
-    - checkout
-    - run: go get -v -t -d ./...
-    - run: go build -o bin/jenkinsctl main.go
-    - run: curl -Lo hub.tgz https://github.com/github/hub/releases/download/v2.6.0/hub-linux-amd64-2.6.0.tgz
-    - run: tar -xvzf hub.tgz
-    - run: GITHUB_USER=${CIRCLE_PROJECT_USERNAME} GITHUB_TOKEN=${GITHUB_PERSONAL_ACCESS_TOKEN} ./hub-linux-amd64-2.6.0/bin/hub release create -a bin/jenkinsctl -m 'Release $(./bin/jenkinsctl version)' -t master $(./bin/jenkinsctl version)
 workflows:
   version: 2
   standard:
     jobs:
     - test
-    - release:
-        filters:
-          branches:
-            only: master
-        requires:
-        - test

@@ -1,0 +1,168 @@
+{
+  "_class": "org.jenkinsci.plugins.workflow.job.WorkflowRun",
+  "actions": [
+    {
+      "_class": "hudson.model.CauseAction",
+      "causes": [
+        {
+          "_class": "hudson.model.Cause$UserIdCause",
+          "shortDescription": "Started by user Emmanuel Goh",
+          "userId": "emmanuelgoh7@gmail.com",
+          "userName": "Emmanuel Goh"
+        }
+      ]
+    },
+    {
+      "_class": "hudson.model.CauseAction",
+      "causes": [
+        {
+          "_class": "com.sonyericsson.rebuild.RebuildCause",
+          "shortDescription": "Rebuilds build #453",
+          "upstreamBuild": 453,
+          "upstreamProject": "jenkinsctl",
+          "upstreamUrl": "job/jenkinsctl/"
+        }
+      ]
+    },
+    {
+      "_class": "hudson.model.ParametersAction",
+      "parameters": [
+        {
+          "_class": "hudson.model.BooleanParameterValue",
+          "name": "USE_SOMETHING",
+          "value": false
+        },
+        {
+          "_class": "hudson.model.StringParameterValue",
+          "name": "NAME",
+          "value": "asdf"
+        },
+        {
+          "_class": "hudson.model.StringParameterValue",
+          "name": "DESCRIPTION",
+          "value": "Emman did this"
+        }
+      ]
+    },
+    {
+      "_class": "jenkins.metrics.impl.TimeInQueueAction",
+      "blockedDurationMillis": 0,
+      "blockedTimeMillis": 0,
+      "buildableDurationMillis": 0,
+      "buildableTimeMillis": 235194,
+      "buildingDurationMillis": 562461,
+      "executingTimeMillis": 954185,
+      "executorUtilization": 1.7,
+      "subTaskCount": 15,
+      "waitingDurationMillis": 0,
+      "waitingTimeMillis": 0
+    },
+    {},
+    {
+      "_class": "hudson.plugins.git.GitTagAction"
+    },
+    {},
+    {},
+    {
+      "_class": "org.jenkinsci.plugins.workflow.cps.EnvActionImpl"
+    },
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {
+      "_class": "org.jenkinsci.plugins.workflow.job.views.FlowGraphAction"
+    },
+    {},
+    {}
+  ],
+  "building": false,
+  "description": null,
+  "displayName": "#454",
+  "duration": 562461,
+  "estimatedDuration": 2927707,
+  "executor": null,
+  "fullDisplayName": "jenkinsctl #454",
+  "id": "454",
+  "keepLog": false,
+  "number": 454,
+  "queueId": 515571,
+  "result": "FAILURE",
+  "timestamp": 1540388561480,
+  "url": "https://jenkins.com/job/jenkinsctl/454/",
+  "changeSets": [
+    {
+      "_class": "hudson.plugins.git.GitChangeSetList",
+      "items": [
+        {
+          "_class": "hudson.plugins.git.GitChangeSet",
+          "affectedPaths": [
+            "recognition-pipeline/Jenkinsfile"
+          ],
+          "commitId": "12345678",
+          "timestamp": 1540388550000,
+          "author": {
+            "absoluteUrl": "https://jenkins.com/user/emmanuelgoh7@gmail.com",
+            "fullName": "Emmanuel Goh"
+          },
+          "authorEmail": "emmanuel@visenze.com",
+          "comment": "Bump up jenkinsctl\n",
+          "date": "2018-10-24 21:42:30 +0800",
+          "id": "12345678",
+          "msg": "Bump up lab jenkinsctl",
+          "paths": [
+            {
+              "editType": "edit",
+              "file": "Jenkinsfile"
+            }
+          ]
+        }
+      ],
+      "kind": "git"
+    }
+  ],
+  "culprits": [
+    {
+      "absoluteUrl": "https://jenkins.com/user/emmanuelgoh7@gmail.com",
+      "fullName": "Emmanuel Goh"
+    }
+  ],
+  "nextBuild": {
+    "number": 455,
+    "url": "https://jenkins.com/job/jenkinsctl/455/"
+  },
+  "previousBuild": {
+    "number": 453,
+    "url": "https://jenkins.com/job/jenkinsctl/453/"
+  },
+  "artifacts": [
+    {
+      "displayPath": "hello.txt",
+      "fileName": "hello.txt",
+      "relativePath": "/something/hello.txt"
+    },
+    {
+      "displayPath": "goodbye.csv",
+      "fileName": "goodbye.csv",
+      "relativePath": "somewhere/goodbye.csv"
+    }
+  ]
+}

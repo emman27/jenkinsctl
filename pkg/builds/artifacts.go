@@ -6,9 +6,9 @@ import (
 
 // Artifact is a build artifact from Jenkins
 type Artifact struct {
-	DisplayPath  string `json:"display_path"`
-	FileName     string `json:"file_name"`
-	RelativePath string `json:"relative_path"`
+	DisplayPath  string `json:"displayPath"`
+	FileName     string `json:"fileName"`
+	RelativePath string `json:"relativePath"`
 }
 
 // Artifacts is a collection of Artifacts.

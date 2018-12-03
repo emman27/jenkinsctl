@@ -157,7 +157,7 @@
     {
       "displayPath": "hello.txt",
       "fileName": "hello.txt",
-      "relativePath": "/something/hello.txt"
+      "relativePath": "something/hello.txt"
     },
     {
       "displayPath": "goodbye.csv",

@@ -19,5 +19,5 @@ func TestArtifacts_Headers_Row_Lengths(t *testing.T) {
 }
 
 func TestArtifactsJSON(t *testing.T) {
-	assert.Equal(t, string(a.JSON()), "[{\"display_path\":\"hello.world\",\"file_name\":\"hello.world\",\"relative_path\":\"/something/hello.world\"}]")
+	assert.Equal(t, string(a.JSON()), "[{\"displayPath\":\"hello.world\",\"fileName\":\"hello.world\",\"relativePath\":\"/something/hello.world\"}]")
 }

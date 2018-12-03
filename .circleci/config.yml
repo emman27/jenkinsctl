@@ -49,6 +49,6 @@ workflows:
     - release:
         filters:
           branches:
-            only: master
+            only: feature/fix-release-pipeline
         requires:
         - test

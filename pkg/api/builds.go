@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"strconv"
 	"strings"
 
 	"github.com/emman27/jenkinsctl/pkg/builds"
@@ -46,5 +47,15 @@ func (c *JenkinsClient) CreateBuild(jobName string, params map[string]string) (*
 		return nil, errors.Wrapf(err, "Could not create build")
 	}
 	glog.Infof("Queued build: %s", resp.Header.Get("Location"))
-	return nil, nil
+	split := strings.Split(resp.Header.Get("Location"), "/")
+	queueItemID := split[len(split)-2]
+	queueItemIDInt, err := strconv.Atoi(queueItemID)
+	if err != nil {
+		return nil, errors.Wrapf(err, "Could not parse a queue number")
+	}
+	execution, err := c.GetQueueItemExecution(queueItemIDInt)
+	if err != nil {
+		return nil, errors.Wrapf(err, "Could not get a matching execution for the job")
+	}
+	return c.GetBuild(jobName, execution.Number)
 }

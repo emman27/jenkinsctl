@@ -4,6 +4,7 @@ package builds
 
 import (
 	"encoding/json"
+	"net/url"
 	"strconv"
 	"time"
 
@@ -78,4 +79,14 @@ func (b *Builds) JSON() []byte {
 		panic(err)
 	}
 	return res
+}
+
+// GenerateParametersBody converts a map of parameters into a Jenkins readable format
+// See https://wiki.jenkins.io/display/JENKINS/Remote+access+API
+func GenerateParametersBody(content map[string]string) (string, error) {
+	values := url.Values{}
+	for k, v := range content {
+		values.Add(k, v)
+	}
+	return values.Encode(), nil
 }

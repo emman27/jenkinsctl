@@ -32,7 +32,7 @@ func createBuildCmd(cmd *cobra.Command, args []string) {
 		os.Exit(1)
 	}
 	jobName := args[0]
-	parsed := map[string]interface{}{}
+	parsed := map[string]string{}
 	for _, param := range *params {
 		arr := strings.Split(param, "=")
 		if len(arr) != 2 {

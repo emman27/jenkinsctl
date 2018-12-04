@@ -1,10 +1,10 @@
 package api
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"strings"
 
 	"github.com/emman27/jenkinsctl/pkg/builds"
 	"github.com/golang/glog"
@@ -28,10 +28,20 @@ func (c *JenkinsClient) GetBuild(jobName string, buildID int) (*builds.Build, er
 }
 
 // CreateBuild starts a build in Jenkins
-func (c *JenkinsClient) CreateBuild(jobName string, params map[string]interface{}) (*builds.Build, error) {
+func (c *JenkinsClient) CreateBuild(jobName string, params map[string]string) (*builds.Build, error) {
 	glog.Infof("Creating build %s with parameters %v", jobName, params)
-	reader := bytes.NewReader([]byte{})
-	resp, err := c.Post(fmt.Sprintf("/job/%s/build", jobName), reader)
+	parameters, err := builds.GenerateParametersBody(params)
+	glog.Infof("Parameters: %s", parameters)
+	if err != nil {
+		return nil, errors.Wrapf(err, "Failed to format parameters")
+	}
+	reader := strings.NewReader("")
+	endpoint := fmt.Sprintf("/job/%s/build", jobName)
+	// FIXME: Technically, this is wrong and it should be based on whether the job is parameterized or not.
+	if parameters != "" {
+		endpoint = fmt.Sprintf("/job/%s/buildWithParameters?%s", jobName, parameters)
+	}
+	resp, err := c.Post(endpoint, reader)
 	if err != nil {
 		return nil, errors.Wrapf(err, "Could not create build")
 	}

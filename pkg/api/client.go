@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"time"
 
@@ -70,6 +71,12 @@ func (c *JenkinsClient) Post(url string, body io.Reader) (*http.Response, error)
 
 func checkStatusCode(resp *http.Response) error {
 	if resp.StatusCode >= 400 {
+		if resp.Body != nil {
+			body, err := ioutil.ReadAll(resp.Body)
+			if err == nil {
+				return fmt.Errorf("api call failed with status code %d and message %s", resp.StatusCode, string(body))
+			}
+		}
 		return fmt.Errorf("api call failed with status code %d", resp.StatusCode)
 	}
 	return nil

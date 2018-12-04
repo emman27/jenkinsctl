@@ -25,7 +25,6 @@ func (c *JenkinsClient) GetArtifact(jobName string, buildID int, artifactFileNam
 	if err != nil {
 		return []byte{}, err
 	}
-	fmt.Println(*artifacts)
 	for _, artifact := range *artifacts {
 		if artifact.FileName == artifactFileName {
 			return c.getArtifactContent(jobName, buildID, artifact.RelativePath)

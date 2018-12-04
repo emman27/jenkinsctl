@@ -28,3 +28,11 @@ func TestBuilds_JSON(t *testing.T) {
 	}
 	assert.Equal(t, "[{\"_class\":\"Something\",\"actions\":[],\"number\":24,\"result\":\"SUCCESS\",\"description\":\"Just a job\",\"timestamp\":123456789,\"duration\":30,\"artifacts\":null}]", string(builds.JSON()))
 }
+
+func Test_GenerateParameters(t *testing.T) {
+	result, err := GenerateParametersBody(map[string]string{
+		"hello": "world",
+	})
+	assert.Nil(t, err)
+	assert.Equal(t, "hello=world", result)
+}

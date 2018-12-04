@@ -15,13 +15,17 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 
 	"github.com/emman27/jenkinsctl/cmd"
+	"github.com/spf13/pflag"
 )
 
 func main() {
+	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
+	pflag.Parse()
 	if err := cmd.Execute(); err != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		os.Exit(1)

@@ -4,6 +4,8 @@ package api
 import (
 	"encoding/base64"
 	"fmt"
+	"io"
+	"io/ioutil"
 	"net/http"
 	"time"
 
@@ -57,8 +59,24 @@ func (c *JenkinsClient) Get(url string) (*http.Response, error) {
 	return c.Do(req)
 }
 
+// Post is syntactic sugar for a HTTP Do.
+// Takes the benefits of the JenkinsClient.Get and replicates them here
+func (c *JenkinsClient) Post(url string, body io.Reader) (*http.Response, error) {
+	req, err := http.NewRequest("POST", c.BaseURL+url, body)
+	if err != nil {
+		return nil, err
+	}
+	return c.Do(req)
+}
+
 func checkStatusCode(resp *http.Response) error {
 	if resp.StatusCode >= 400 {
+		if resp.Body != nil {
+			body, err := ioutil.ReadAll(resp.Body)
+			if err == nil {
+				return fmt.Errorf("api call failed with status code %d and message %s", resp.StatusCode, string(body))
+			}
+		}
 		return fmt.Errorf("api call failed with status code %d", resp.StatusCode)
 	}
 	return nil

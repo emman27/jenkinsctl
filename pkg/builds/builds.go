@@ -4,10 +4,12 @@ package builds
 
 import (
 	"encoding/json"
+	"net/url"
 	"strconv"
 	"time"
 
 	durafmt "github.com/hako/durafmt"
+	"github.com/pkg/errors"
 )
 
 // BuildResult is an enum of possible Jenkins build results
@@ -78,4 +80,25 @@ func (b *Builds) JSON() []byte {
 		panic(err)
 	}
 	return res
+}
+
+// GenerateParametersBody converts a map of parameters into a Jenkins readable format
+// See https://wiki.jenkins.io/display/JENKINS/Remote+access+API
+func GenerateParametersBody(content map[string]interface{}) (string, error) {
+	params := map[string][]map[string]interface{}{
+		"parameter": []map[string]interface{}{},
+	}
+	for k, v := range content {
+		params["parameter"] = append(params["parameter"], map[string]interface{}{
+			"name":  k,
+			"value": v,
+		})
+	}
+	dat, err := json.Marshal(params)
+	if err != nil {
+		return "", errors.Wrap(err, "Could not convert content to JSON")
+	}
+	v := url.Values{}
+	v.Add("json", string(dat))
+	return v.Encode(), nil
 }

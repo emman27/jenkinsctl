@@ -2,8 +2,10 @@ package api
 
 import (
 	"encoding/base64"
+	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -35,4 +37,16 @@ func Test_DoAddsHeaders(t *testing.T) {
 	defer server.Close()
 	client := NewJenkinsClient(server.URL, "user", "password")
 	client.Get("/")
+}
+
+func Test_PostSendsBody(t *testing.T) {
+	handler := http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+		body, err := ioutil.ReadAll(req.Body)
+		assert.Nil(t, err)
+		assert.Equal(t, string(body), "test message")
+	})
+	server := httptest.NewServer(handler)
+	defer server.Close()
+	client := NewJenkinsClient(server.URL, "user", "password")
+	client.Post("/", strings.NewReader("test message"))
 }

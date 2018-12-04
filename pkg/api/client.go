@@ -4,6 +4,7 @@ package api
 import (
 	"encoding/base64"
 	"fmt"
+	"io"
 	"net/http"
 	"time"
 
@@ -51,6 +52,16 @@ func (c *JenkinsClient) Do(req *http.Request) (*http.Response, error) {
 // Also automatically adds the base URL
 func (c *JenkinsClient) Get(url string) (*http.Response, error) {
 	req, err := http.NewRequest("GET", c.BaseURL+url, nil)
+	if err != nil {
+		return nil, err
+	}
+	return c.Do(req)
+}
+
+// Post is syntactic sugar for a HTTP Do.
+// Takes the benefits of the JenkinsClient.Get and replicates them here
+func (c *JenkinsClient) Post(url string, body io.Reader) (*http.Response, error) {
+	req, err := http.NewRequest("POST", c.BaseURL+url, body)
 	if err != nil {
 		return nil, err
 	}

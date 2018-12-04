@@ -1,0 +1,36 @@
+{
+  "_class": "hudson.model.Queue$LeftItem",
+  "actions": [
+    {
+      "_class": "hudson.model.CauseAction",
+      "causes": [
+        {
+          "_class": "hudson.model.Cause$UserIdCause",
+          "shortDescription": "Started by user Emmanuel Goh",
+          "userId": "emmanuelgoh7@gmail.com",
+          "userName": "Emmanuel Goh"
+        }
+      ]
+    }
+  ],
+  "blocked": false,
+  "buildable": false,
+  "id": 773178,
+  "inQueueSince": 1543833159437,
+  "params": "",
+  "stuck": false,
+  "task": {
+    "_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+    "name": "somejob",
+    "url": "https://jenkins.com/job/somejob/",
+    "color": "blue_anime"
+  },
+  "url": "queue/item/773178/",
+  "why": null,
+  "cancelled": false,
+  "executable": {
+    "_class": "org.jenkinsci.plugins.workflow.job.WorkflowRun",
+    "number": 96,
+    "url": "https://jenkins.com/job/somejob/96/"
+  }
+}

@@ -30,9 +30,8 @@ func TestBuilds_JSON(t *testing.T) {
 }
 
 func Test_GenerateParameters(t *testing.T) {
-	result, err := GenerateParametersBody(map[string]string{
+	result := GenerateParametersBody(map[string]string{
 		"hello": "world",
 	})
-	assert.Nil(t, err)
 	assert.Equal(t, "hello=world", result)
 }

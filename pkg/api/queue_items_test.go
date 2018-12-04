@@ -48,3 +48,15 @@ func Test_GetQueueItemExecution(t *testing.T) {
 	assert.Nil(t, err)
 	assert.NotNil(t, execution)
 }
+
+func Test_GetQueueItem404(t *testing.T) {
+	handler := http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+		assert.Equal(t, "GET", req.Method)
+		res.WriteHeader(http.StatusNotFound)
+	})
+	server := httptest.NewServer(handler)
+	c := NewJenkinsClient(server.URL, "", "")
+	item, err := c.GetQueueItem(71)
+	assert.NotNil(t, err)
+	assert.Nil(t, item)
+}

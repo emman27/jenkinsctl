@@ -18,3 +18,15 @@ func Test_CreateBuildWithoutParams(t *testing.T) {
 	_, err := c.CreateBuild("my-job", map[string]interface{}{})
 	assert.Nil(t, err)
 }
+
+func Test_CreateBuildWithAPIFailure(t *testing.T) {
+	handler := http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+		assert.Equal(t, "/job/my-job/build", req.URL.Path)
+		assert.Equal(t, "POST", req.Method)
+		res.WriteHeader(http.StatusBadRequest)
+	})
+	server := httptest.NewServer(handler)
+	c := NewJenkinsClient(server.URL, "user", "password")
+	_, err := c.CreateBuild("my-job", map[string]interface{}{})
+	assert.NotNil(t, err)
+}

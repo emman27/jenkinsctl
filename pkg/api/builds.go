@@ -33,7 +33,7 @@ func (c *JenkinsClient) CreateBuild(jobName string, params map[string]interface{
 	reader := bytes.NewReader([]byte{})
 	resp, err := c.Post(fmt.Sprintf("/job/%s/build", jobName), reader)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrapf(err, "Could not create build")
 	}
 	glog.Infof("Queued build: %s", resp.Header.Get("Location"))
 	return nil, nil

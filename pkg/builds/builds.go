@@ -83,10 +83,10 @@ func (b *Builds) JSON() []byte {
 
 // GenerateParametersBody converts a map of parameters into a Jenkins readable format
 // See https://wiki.jenkins.io/display/JENKINS/Remote+access+API
-func GenerateParametersBody(content map[string]string) (string, error) {
+func GenerateParametersBody(content map[string]string) string {
 	values := url.Values{}
 	for k, v := range content {
 		values.Add(k, v)
 	}
-	return values.Encode(), nil
+	return values.Encode()
 }

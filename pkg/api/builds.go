@@ -47,8 +47,13 @@ func (c *JenkinsClient) CreateBuild(jobName string, params map[string]string) (*
 		return nil, errors.Wrapf(err, "Could not create build")
 	}
 	glog.Infof("Queued build: %s", resp.Header.Get("Location"))
-	split := strings.Split(resp.Header.Get("Location"), "/")
+	return c.followLocationToBuild(resp.Header.Get("Location"))
+}
+
+func (c *JenkinsClient) followLocationToBuild(location string) (*builds.Build, error) {
+	split := strings.Split(location, "/")
 	queueItemID := split[len(split)-2]
+	jobName := split[len(split)-3]
 	queueItemIDInt, err := strconv.Atoi(queueItemID)
 	if err != nil {
 		return nil, errors.Wrapf(err, "Could not parse a queue number")
@@ -58,4 +63,5 @@ func (c *JenkinsClient) CreateBuild(jobName string, params map[string]string) (*
 		return nil, errors.Wrapf(err, "Could not get a matching execution for the job")
 	}
 	return c.GetBuild(jobName, execution.Number)
+
 }

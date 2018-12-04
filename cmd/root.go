@@ -15,11 +15,8 @@
 package cmd
 
 import (
-	"flag"
-
 	"github.com/emman27/jenkinsctl/pkg/api"
 	"github.com/spf13/cobra"
-	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 )
 
@@ -38,8 +35,6 @@ func init() {
 	viper.BindEnv("user")
 	viper.BindEnv("apikey")
 	viper.BindEnv("host")
-	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
-	pflag.Parse()
 	client = api.NewJenkinsClient(viper.GetString("host"), viper.GetString("user"), viper.GetString("apikey"))
 }
 

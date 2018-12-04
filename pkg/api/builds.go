@@ -28,7 +28,13 @@ func (c *JenkinsClient) GetBuild(jobName string, buildID int) (*builds.Build, er
 }
 
 // CreateBuild starts a build in Jenkins
-func (c *JenkinsClient) CreateBuild(jobName string, params map[string]interface{}) {
+func (c *JenkinsClient) CreateBuild(jobName string, params map[string]interface{}) (*builds.Build, error) {
+	glog.Infof("Creating build %s with parameters %v", jobName, params)
 	reader := bytes.NewReader([]byte{})
-	c.Post(fmt.Sprintf("/job/%s/build", jobName), reader)
+	resp, err := c.Post(fmt.Sprintf("/job/%s/build", jobName), reader)
+	if err != nil {
+		return nil, err
+	}
+	glog.Infof("Queued build: %s", resp.Header.Get("Location"))
+	return nil, nil
 }

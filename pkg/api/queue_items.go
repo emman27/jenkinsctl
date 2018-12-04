@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"time"
 
 	"github.com/emman27/jenkinsctl/pkg/queue"
 	"github.com/pkg/errors"
@@ -25,4 +26,18 @@ func (c *JenkinsClient) GetQueueItem(ID int) (*queue.Item, error) {
 		return nil, errors.Wrap(err, "Cannot convert JSON to Item")
 	}
 	return &item, nil
+}
+
+// GetQueueItemExecution will wait until a queue item is executed, then return that Execution
+func (c *JenkinsClient) GetQueueItemExecution(ID int) (*queue.Executable, error) {
+	var item = &queue.Item{}
+	var err error
+	for !item.Executing() {
+		item, err = c.GetQueueItem(ID)
+		if err != nil {
+			return nil, err
+		}
+		time.Sleep(500 * time.Millisecond)
+	}
+	return item.Executable, nil
 }

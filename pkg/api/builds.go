@@ -37,6 +37,7 @@ func (c *JenkinsClient) CreateBuild(jobName string, params map[string]string) (*
 	}
 	reader := strings.NewReader("")
 	endpoint := fmt.Sprintf("/job/%s/build", jobName)
+	// FIXME: Technically, this is wrong and it should be based on whether the job is parameterized or not.
 	if parameters != "" {
 		endpoint = fmt.Sprintf("/job/%s/buildWithParameters?%s", jobName, parameters)
 	}

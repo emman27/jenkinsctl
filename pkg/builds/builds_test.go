@@ -30,9 +30,9 @@ func TestBuilds_JSON(t *testing.T) {
 }
 
 func Test_GenerateParameters(t *testing.T) {
-	result, err := GenerateParametersBody(map[string]interface{}{
+	result, err := GenerateParametersBody(map[string]string{
 		"hello": "world",
 	})
 	assert.Nil(t, err)
-	assert.Equal(t, "json=%7B%22parameter%22%3A%5B%7B%22name%22%3A%22hello%22%2C%22value%22%3A%22world%22%7D%5D%7D", result)
+	assert.Equal(t, "hello=world", result)
 }

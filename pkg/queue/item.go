@@ -1,5 +1,7 @@
 package queue
 
+import "strings"
+
 // Item is an Item in the queue
 type Item struct {
 	Blocked    bool        `json:"blocked"`
@@ -25,4 +27,10 @@ type Task struct {
 // Executing returns a boolean indicating whether a queue Item is currently executing
 func (i *Item) Executing() bool {
 	return i.Executable != nil
+}
+
+// JobName gets the job name of the execution that happened
+func (e *Executable) JobName() string {
+	split := strings.Split(e.URL, "/")
+	return split[len(split)-3]
 }

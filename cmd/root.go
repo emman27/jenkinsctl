@@ -35,7 +35,6 @@ func init() {
 	viper.BindEnv("user")
 	viper.BindEnv("apikey")
 	viper.BindEnv("host")
-	client = api.NewJenkinsClient(viper.GetString("host"), viper.GetString("user"), viper.GetString("apikey"))
 }
 
 // rootCmd represents the base command when called without any subcommands
@@ -51,6 +50,7 @@ var rootCmd = &cobra.Command{
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() error {
+	client = api.NewJenkinsClient(viper.GetString("host"), viper.GetString("user"), viper.GetString("apikey"))
 	rootCmd.AddCommand(versionCmd)
 	rootCmd.AddCommand(getCmd)
 	rootCmd.AddCommand(createCmd)
